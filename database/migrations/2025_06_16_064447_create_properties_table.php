@@ -31,6 +31,7 @@ return new class extends Migration
             $table->year('year_built')->nullable();
             $table->foreignId('agent_id')->nullable()->constrained('users')->onDelete('set null');
             $table->boolean('process_type')->default(0);
+            $table->boolean('is_published')->default(0);
             $table->timestamps();
         });
     }

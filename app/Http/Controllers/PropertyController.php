@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PropertyRequest;
 use App\Models\Feature;
 use App\Models\Property;
+use App\Services\TelegramService;
 use Cloudinary\Api\Upload\UploadApi;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -35,10 +37,69 @@ class PropertyController extends Controller
     }
 
     // Agent management views
-    public function manage()
+    public function manage(Request $request)
     {
         $properties = Property::where('agent_id', auth()->user()->id)->paginate(15);
-        return view('admin.properties.index', compact('properties'));
+        $cities = Property::select('city')->distinct()->pluck('city');
+        $types = Property::select('type')->distinct()->pluck('type');
+        $statuses = Property::select('status')->distinct()->pluck('status');
+        $countries = Property::select('country')->distinct()->pluck('country');
+        $q = $request->input('q');
+        $type = $request->input('type');
+        $status = $request->input('status');
+        $city = $request->input('city');
+        $country = $request->input('country');
+        $price_min = $request->input('price_min');
+        $price_max = $request->input('price_max');
+        $bedrooms = $request->input('bedrooms');
+        $bathrooms = $request->input('bathrooms');
+        $area = $request->input('area');
+        $query = Property::query();
+        if ($q) {
+            $query->where(function ($sub) use ($q) {
+                $sub->where('title', 'like', "%$q%")
+                    ->orWhere('city', 'like', "%$q%")
+                    ->orWhere('type', 'like', "%$q%")
+                    ->orWhere('address', 'like', "%$q%")
+                    ->orWhere('state', 'like', "%$q%")
+                    ->orWhere('country', 'like', "%$q%")
+                    ->orWhere('process_type', 'like', "%$q%")
+
+                ;
+            });
+        }
+        if ($type) {
+            $query->where('type', $type);
+        }
+        if ($bedrooms !== null && $bedrooms !== '') {
+            $query->where('bedrooms', $bedrooms);
+        }
+        if ($bathrooms !== null && $bathrooms !== '') {
+            $query->where('bathrooms', $bathrooms);
+        }
+        if ($area !== null && $area !== '') {
+            $query->where('size', '>=', $area);
+        }
+        if ($status) {
+            $query->where('status', $status);
+        }
+        if ($city) {
+            $query->where('city', $city);
+        }
+        if ($country) {
+            $query->where('country', $country);
+        }
+        if ($price_min !== null && $price_min !== '') {
+            $query->where('price', '>=', $price_min);
+        }
+        if ($price_max !== null && $price_max !== '') {
+            $query->where('price', '<=', $price_max);
+        }
+        $properties = $query->paginate(12)->appends($request->except('page'));
+        if ($request->ajax()) {
+            return view('admin.properties.index', compact('properties', 'cities', 'types', 'statuses', 'countries'))->render();
+        }
+        return view('admin.properties.index', compact('properties', 'cities', 'types', 'statuses', 'countries'));
     }
 
     public function create()
@@ -54,8 +115,8 @@ class PropertyController extends Controller
 
             // Create property with agent_id
             $validated['agent_id'] = auth()->user()->id;
-
             $property = Property::create($validated);
+
 
             // Handle multiple image uploads to Cloudinary
             if ($request->hasFile('images')) {
@@ -108,6 +169,34 @@ class PropertyController extends Controller
             return back()
                 ->withInput()
                 ->with('error', 'Failed to create property: ' . $e->getMessage());
+        }
+    }
+    public function publish($id, TelegramService $telegram)
+    {
+        $property = Property::findOrFail($id,);
+        if (!Auth::user()->can('publish properties')) {
+            return back()->with('error', 'You are not authorized to publish this property.');
+        }
+        $message = "🏡 *عقار جديد:*\n"
+            . "*{$property->title}*\n"
+            . "📍 الموقع: {$property->address}\n"
+            . "💰 السعر: {$property->price}\n"
+            . ")";
+
+        $sent = $telegram->sendMessage($message);
+        if (!$sent) {
+            Log::warning('Telegram message failed to send for property ID: ' . $property->id);
+            // Optionally, flash a warning to the user:
+            return back()
+                ->withInput()
+                ->with('Telegram notification failed.');
+
+            // session()->flash('warning', 'Property created, but Telegram notification failed.');
+        } else {
+            $property->is_published = true;
+            Log::info('Telegram message sent successfully for property ID: ' . $property->id);
+            $property->save();
+            return redirect()->back()->with('success', 'Property published successfully!');
         }
     }
     public function edit($id)
@@ -206,16 +295,43 @@ class PropertyController extends Controller
 
     public function search(Request $request)
     {
-        $query = $request->input('q');
-        $properties = \App\Models\Property::search($query)
-            ->query(function ($builder) use ($request) {
-                if ($request->filled('city')) {
-                    $builder->where('city', $request->city);
-                }
-                // Add more filters as needed
-            })
-            ->paginate(12);
+        $q = $request->input('q');
+        $type = $request->input('type');
+        $status = $request->input('status');
+        $query = Property::query();
+        if ($q) {
+            $query->where(function ($sub) use ($q) {
+                $sub->where('title', 'like', "%$q%")
+                    ->orWhere('city', 'like', "%$q%")
+                    ->orWhere('type', 'like', "%$q%")
+                    ->orWhere('address', 'like', "%$q%")
+                    ->orWhere('state', 'like', "%$q%")
+                    ->orWhere('country', 'like', "%$q%")
+                    ->orWhere('status', 'like', "%$q%")
+                    ->orWhere('price', 'like', "%$q%")
+                    ->orWhere('bedrooms', 'like', "%$q%")
+                    ->orWhere('bathrooms', 'like', "%$q%")
+                    ->orWhere('year_built', 'like', "%$q%")
+                    ->orWhere('process_type', 'like', "%$q%")
+                ;
+            });
+        }
+        if ($type) {
+            $query->where('type', $type);
+        }
+        if ($status) {
+            $query->where('status', $status);
+        }
+        $properties = $query->limit(100)->get();
+        return response()->json($properties);
+    }
 
-        return view('admin.properties.index', compact('properties', 'query'));
+    public function map(Request $request)
+    {
+
+        $properties = json_decode(urldecode($request->query('payload')), true);
+
+        //$properties = Property::where('agent_id', auth()->user()->id)->where('status', 'available')->get();
+        return view('admin.properties.map', compact('properties'));
     }
 }

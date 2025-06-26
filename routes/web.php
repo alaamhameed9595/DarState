@@ -32,6 +32,7 @@ Route::middleware(['auth'])->name('auth.')->group(function () {
         Route::get('/search-logs', [AnalyticsController::class, 'logs'])->name('search.logs')->middleware('can:view search logs');
     });
 
+    Route::get('/properties/map', [PropertyController::class, 'map'])->name('properties.map');
     // 🏠 Agent Routes
     Route::middleware('can:view properties')->group(function () {
 
@@ -45,8 +46,7 @@ Route::middleware(['auth'])->name('auth.')->group(function () {
         Route::delete('/properties/{id}', [PropertyController::class, 'destroy'])->name('properties.destroy')->middleware('can:delete properties');
         Route::get('/properties/images/{imageId}', [PropertyController::class, 'deleteImage'])->name('properties.deleteImage')->middleware('can:edit properties');
         Route::get('/properties/search', [PropertyController::class, 'search'])->name('properties.search');
-
-        Route::post('/properties/{id}/publish', [PropertyController::class, 'publish'])->name('properties.publish')->middleware('can:publish properties');
+        Route::get('/properties/{id}/publish', [PropertyController::class, 'publish'])->name('properties.publish')->middleware('can:publish properties');
         Route::post('/properties/{id}/feature', [PropertyController::class, 'feature'])->name('properties.feature')->middleware('can:feature properties');
 
         // Inquiries

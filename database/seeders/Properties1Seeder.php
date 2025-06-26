@@ -26,6 +26,7 @@ class Properties1Seeder extends Seeder
                 'zipcode' => '90001',
                 'bedrooms' => 5,
                 'bathrooms' => 4,
+                'is_published' => 0,
                 'size' => 3500,
                 'type' => 'house',
                 'agent_id' => 1, // Make sure this agent exists

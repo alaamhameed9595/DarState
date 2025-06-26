@@ -24,7 +24,7 @@
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{ asset('assets/admin/images/favicon.png') }}" />
     <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
     @yield('styles')
 </head>
 
@@ -447,11 +447,14 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.9.4/dist/leaflet.markercluster.js"></script>
     <script>
         $(document).ready(function() {
             $('#logout-button').click(function() {

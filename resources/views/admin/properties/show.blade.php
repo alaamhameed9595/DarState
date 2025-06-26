@@ -1,5 +1,137 @@
 @extends('layouts.admin')
 
+@push('styles')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #mapid {
+            min-height: 500px;
+        }
+
+        .property-image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .property-image-container:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .image-wrapper {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .image-wrapper:hover {
+            transform: scale(1.05);
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .image-wrapper:hover .image-overlay {
+            opacity: 1;
+        }
+
+        .property-image {
+            transition: transform 0.3s ease;
+        }
+
+        .modal-image {
+            cursor: zoom-in;
+            transition: transform 0.3s ease;
+        }
+
+        .modal-image:hover {
+            transform: scale(1.1);
+        }
+
+        .image-zoom-container {
+            position: relative;
+            overflow: hidden;
+            background: #f8f9fa;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-counter {
+            font-weight: 500;
+            color: #6c757d;
+        }
+
+        .modal-dialog.modal-lg {
+            max-width: 90%;
+        }
+
+        .modal-body {
+            padding: 0 !important;
+        }
+
+        .modal-header {
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .modal-footer {
+            background: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .modal-dialog.modal-lg {
+                max-width: 95%;
+                margin: 10px;
+            }
+
+            .image-zoom-container {
+                min-height: 300px;
+            }
+
+            .modal-image {
+                max-height: 60vh !important;
+            }
+        }
+
+        /* Loading animation for images */
+        .property-image {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .property-image[src] {
+            animation: none;
+        }
+    </style>
+@endpush
 @section('content')
     <div class="main-panel">
         <div class="content-wrapper">
@@ -248,16 +380,8 @@
                             <!-- map Information -->
                             <div class="row mt-4">
                                 <div class="col-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title">location</h4>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div id="map" style="height: 400px;"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <div id="map" class="w-full h-full" style="min-height: 500px;"></div>
+
                                 </div>
                             </div>
                             <!-- Additional Property Information -->
@@ -415,205 +539,4 @@
             });
         });
     </script>
-
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let map, markers = [];
-            /* ----------------------------- Initialize Map ----------------------------- */
-            function initMap() {
-                map = L.map('map', {
-                    center: {
-                        lat: 28.626137,
-                        lng: 79.821603,
-                    },
-                    zoom: 15
-                });
-
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '© OpenStreetMap'
-                }).addTo(map);
-
-                map.on('click', mapClicked);
-                initMarkers();
-            }
-            initMap();
-
-            /* --------------------------- Initialize Markers --------------------------- */
-            function initMarkers() {
-                const initialMarkers = <?php echo json_encode($initialMarkers); ?>;
-
-                for (let index = 0; index < initialMarkers.length; index++) {
-
-                    const data = initialMarkers[index];
-                    const marker = generateMarker(data, index);
-                    marker.addTo(map).bindPopup(`<b>${data.position.lat},  ${data.position.lng}</b>`);
-                    map.panTo(data.position);
-                    markers.push(marker)
-                }
-            }
-
-            function generateMarker(data, index) {
-                return L.marker(data.position, {
-                        draggable: data.draggable
-                    })
-                    .on('click', (event) => markerClicked(event, index))
-                    .on('dragend', (event) => markerDragEnd(event, index));
-            }
-
-            /* ------------------------- Handle Map Click Event ------------------------- */
-            function mapClicked($event) {
-                console.log(map);
-                console.log($event.latlng.lat, $event.latlng.lng);
-            }
-
-            /* ------------------------ Handle Marker Click Event ----------------------- */
-            function markerClicked($event, index) {
-                console.log(map);
-                console.log($event.latlng.lat, $event.latlng.lng);
-            }
-
-            /* ----------------------- Handle Marker DragEnd Event ---------------------- */
-            function markerDragEnd($event, index) {
-                console.log(map);
-                console.log($event.target.getLatLng());
-            }
-        });
-    </script>
-@endpush
-
-@push('styles')
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <style>
-        #map {
-            height: 400px !important;
-            width: 100%;
-            min-height: 300px;
-            z-index: 1;
-        }
-
-        .property-image-container {
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .property-image-container:hover {
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        .image-wrapper {
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .image-wrapper:hover {
-            transform: scale(1.05);
-        }
-
-        .image-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            border-radius: 8px;
-        }
-
-        .image-wrapper:hover .image-overlay {
-            opacity: 1;
-        }
-
-        .property-image {
-            transition: transform 0.3s ease;
-        }
-
-        .modal-image {
-            cursor: zoom-in;
-            transition: transform 0.3s ease;
-        }
-
-        .modal-image:hover {
-            transform: scale(1.1);
-        }
-
-        .image-zoom-container {
-            position: relative;
-            overflow: hidden;
-            background: #f8f9fa;
-            min-height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .image-counter {
-            font-weight: 500;
-            color: #6c757d;
-        }
-
-        .modal-dialog.modal-lg {
-            max-width: 90%;
-        }
-
-        .modal-body {
-            padding: 0 !important;
-        }
-
-        .modal-header {
-            background: #f8f9fa;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .modal-footer {
-            background: #f8f9fa;
-            border-top: 1px solid #dee2e6;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .modal-dialog.modal-lg {
-                max-width: 95%;
-                margin: 10px;
-            }
-
-            .image-zoom-container {
-                min-height: 300px;
-            }
-
-            .modal-image {
-                max-height: 60vh !important;
-            }
-        }
-
-        /* Loading animation for images */
-        .property-image {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-        }
-
-        @keyframes loading {
-            0% {
-                background-position: 200% 0;
-            }
-
-            100% {
-                background-position: -200% 0;
-            }
-        }
-
-        .property-image[src] {
-            animation: none;
-        }
-    </style>
 @endpush
