@@ -428,13 +428,26 @@
                                                     data-bs-target="#deletePropertyModal">
                                                     <i class="fa fa-trash"></i> Delete Property
                                                 </button>
+                                                @if ($property->is_published == 0)
+                                                    @haspermission('publish properties')
+                                                        <a href="{{ route('auth.properties.publish', $property->id) }}"
+                                                            class="btn btn-info">
+                                                            <i class="fa fa-globe"></i>Publish Property
+                                                        </a>
+                                                    @endhaspermission
+                                                @endif
+                                                <a href="{{ route('auth.properties.manage') }}" class="btn btn-light">
+                                                    <i class="fa fa-arrow-left"></i> Back to Properties
+                                                </a>
                                             @endif
                                         </div>
+
                                         <div>
-                                            <a href="{{ route('auth.properties.manage') }}" class="btn btn-light">
-                                                <i class="fa fa-arrow-left"></i> Back to Properties
-                                            </a>
+
+
                                         </div>
+
+
                                     </div>
                                 </div>
                             </div>
