@@ -377,13 +377,7 @@
                                     </div>
                                 </div>
                             @endif
-                            <!-- map Information -->
-                            <div class="row mt-4">
-                                <div class="col-12">
-                                    <div id="map" class="w-full h-full" style="min-height: 500px;"></div>
 
-                                </div>
-                            </div>
                             <!-- Additional Property Information -->
                             <div class="row mt-4">
                                 <div class="col-12">
@@ -442,10 +436,6 @@
                                             @endif
                                         </div>
 
-                                        <div>
-
-
-                                        </div>
 
 
                                     </div>
