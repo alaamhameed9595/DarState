@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -18,6 +17,10 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
     'admin_name' => env('ADMIN_NAME'),
+    'fixed_location' => [
+        'lat' => 25.53447140,
+        'lng' => 56.00271590,
+    ],
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -58,7 +61,7 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL'),
-
+    'contact_email' => env('CONTACT_EMAIL', 'contact@darstate.com'),
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -84,7 +87,8 @@ return [
     */
 
     'locale' => 'en',
-
+    'currency' => 'dollar',
+    'currency_sign' => 'dollar_sign',
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale

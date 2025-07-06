@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\LocationService;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
@@ -14,7 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(LocationService::class, function () {
+            return new LocationService();
+        });
     }
 
     /**

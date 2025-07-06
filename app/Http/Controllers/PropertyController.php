@@ -18,21 +18,62 @@ class PropertyController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Property::query()->where('status', 'available');
 
+        $query = Property::query()->where('status', 'available')->where('is_published', true);
+        $q = $request->input('q');
+        if ($q) {
+            $query->where(function ($sub) use ($q) {
+                $sub->where('title', 'like', "%$q%")
+                    ->orWhere('city', 'like', "%$q%")
+                    ->orWhere('type', 'like', "%$q%")
+                    ->orWhere('address', 'like', "%$q%")
+                    ->orWhere('state', 'like', "%$q%")
+                    ->orWhere('country', 'like', "%$q%")
+                    ->orWhere('process_type', 'like', "%$q%")
+
+                ;
+            });
+        }
         if ($request->filled('city')) {
             $query->where('city', $request->city);
         }
         if ($request->filled('type')) {
             $query->where('type', $request->type);
         }
-        $properties = $query->paginate(12);
-        return view('admin.properties.index', compact('properties'));
+        if ($request->filled('bedrooms')) {
+            $query->where('bedrooms', '>=', $request->bedrooms);
+        }
+        if ($request->filled('bathrooms')) {
+            $query->where('bathrooms', '>=', $request->bathrooms);
+        }
+        if ($request->filled('price_max')) {
+            $query->where('price', '<=', $request->price_max);
+        }
+        if ($request->filled('price_min')) {
+            $query->where('price', '>=', $request->price_min);
+        }
+        if ($request->filled('area_max')) {
+            $query->where('size', '<=', $request->area_max);
+        }
+        if ($request->filled('area_min')) {
+            $query->where('size', '>=', $request->area_min);
+        }
+        $properties = $query->with('images')->paginate(12);
+        // return $properties;
+        $cities = Property::select('city')->distinct()->pluck('city');
+        $types = Property::select('type')->distinct()->pluck('type');
+        $statuses = Property::select('status')->distinct()->pluck('status');
+        $countries = Property::select('country')->distinct()->pluck('country');
+        $features = Feature::all();
+        $bedrooms = Property::select('bedrooms')->distinct()->pluck('bedrooms');
+        $bathrooms = Property::select('bathrooms')->distinct()->pluck('bathrooms');
+        // $areas = Property::select('size')->distinct()->pluck('size');
+        return view('website.index', compact(['properties', 'cities', 'types', 'statuses', 'countries', 'features', 'bedrooms', 'bathrooms']));
     }
 
-    public function show($id)
+        public function show($id)
     {
-        $property = Property::with('features', 'agent')->findOrFail($id);
+        $property = Property::with('features', 'agent', 'inquiries')->findOrFail($id);
         return view('admin.properties.show', compact('property'));
     }
 
@@ -333,5 +374,38 @@ class PropertyController extends Controller
 
         //$properties = Property::where('agent_id', auth()->user()->id)->where('status', 'available')->get();
         return view('admin.properties.map', compact('properties'));
+    }
+    function about()
+    {
+        $properties = Property::where('status', 'available')->where('is_published', true)->take(4)->with('images')->get();
+        return view('website.about', compact('properties'));
+    }
+
+    public function faq()
+    {
+        return view('website.faq');
+    }
+    public function contact()
+    {
+        return view('website.contact');
+    }
+    public function blog()
+    {
+        $properties = Property::where('status', 'available')->where('is_published', true)->take(4)->with('images')->get();
+
+        return view('website.blog', compact('properties'));
+    }
+
+    public function property($id)
+    {
+        $property = Property::with('images', 'features','agent')->findOrFail($id);
+        $relatedProperties = Property::where('id', '!=', $id)
+            ->where('status', 'available')
+            ->where('is_published', true)
+            ->take(4)
+            ->with('images')
+            ->get();
+
+        return view('website.property', compact('property', 'relatedProperties'));
     }
 }

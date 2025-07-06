@@ -25,6 +25,84 @@
     <link rel="shortcut icon" href="{{ asset('assets/admin/images/favicon.png') }}" />
     <!-- Leaflet CSS -->
 
+    <!-- Custom Notification Styles -->
+    <style>
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            min-width: 20px;
+            height: 20px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+            border: 2px solid #fff;
+        }
+
+        .notification-badge:empty {
+            display: none !important;
+        }
+
+        .pulse-animation {
+            animation: pulse 0.5s ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Enhanced unread notification styling */
+        .table-light {
+            background-color: #f8f9fa !important;
+            border-left: 4px solid #007bff;
+        }
+
+        .table-light:hover {
+            background-color: #e9ecef !important;
+        }
+
+        /* Notification dropdown enhancements */
+        .notification-item {
+            transition: all 0.3s ease;
+        }
+
+        .notification-item:hover {
+            background-color: #f8f9fa;
+            transform: translateX(5px);
+        }
+
+        /* Badge enhancements */
+        .badge {
+            font-size: 0.75em;
+            padding: 0.35em 0.65em;
+            border-radius: 0.375rem;
+        }
+
+        .badge.bg-danger {
+            background-color: #dc3545 !important;
+            color: white;
+        }
+
+        .badge.bg-success {
+            background-color: #198754 !important;
+            color: white;
+        }
+    </style>
+
     @yield('styles')
 </head>
 
@@ -134,53 +212,19 @@
                         <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
                             data-bs-toggle="dropdown">
                             <i class="mdi mdi-bell-outline"></i>
-                            <span class="count-symbol bg-danger"></span>
+                            <span class="count-symbol bg-danger notification-badge" id="notificationCount" style="display: none;"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end navbar-dropdown preview-list"
                             aria-labelledby="notificationDropdown">
                             <h6 class="p-3 mb-0">Notifications</h6>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-success">
-                                        <i class="mdi mdi-calendar"></i>
-                                    </div>
-                                </div>
-                                <div
-                                    class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                                    <h6 class="preview-subject font-weight-normal mb-1">Event today</h6>
-                                    <p class="text-gray ellipsis mb-0"> Just a reminder that you have an event today
-                                    </p>
-                                </div>
-                            </a>
+                            <div id="notificationsList">
+                                <!-- Dynamic notifications will be loaded here -->
+                            </div>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-warning">
-                                        <i class="mdi mdi-cog"></i>
-                                    </div>
-                                </div>
-                                <div
-                                    class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                                    <h6 class="preview-subject font-weight-normal mb-1">Settings</h6>
-                                    <p class="text-gray ellipsis mb-0"> Update dashboard </p>
-                                </div>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-info">
-                                        <i class="mdi mdi-link-variant"></i>
-                                    </div>
-                                </div>
-                                <div
-                                    class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                                    <h6 class="preview-subject font-weight-normal mb-1">Launch Admin</h6>
-                                    <p class="text-gray ellipsis mb-0"> New admin wow! </p>
-                                </div>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <h6 class="p-3 mb-0 text-center">See all notifications</h6>
+                            <h6 class="p-3 mb-0 text-center">
+                                <a href="{{ route('auth.notifications.index') }}" class="text-decoration-none">See all notifications</a>
+                            </h6>
                         </div>
                     </li>
 
@@ -299,6 +343,15 @@
                         <!--  --  end feature section -->
                     @endhaspermission
 
+                    <!--  -- Notifications section -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('auth.notifications.index') }}">
+                            <span class="menu-title">Notifications</span>
+                            <i class="mdi mdi-bell menu-icon"></i>
+                        </a>
+                    </li>
+                    <!--  --  end notifications section -->
+
                     <!--  -- posts section -->
                     <li class="nav-item">
                         {{-- <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic1" aria-expanded="true"
@@ -412,15 +465,7 @@
 
 
 
-            <footer class="footer">
-                <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2025 <a
-                            href="https://www.bootstrapdash.com/" target="_blank"></a>. All rights
-                        reserved.</span>
-                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
-                        <i class="mdi mdi-heart text-danger"></i></span>
-                </div>
-            </footer>
+
             <!-- partial -->
         </div>
         <!-- main-panel ends -->
@@ -449,6 +494,7 @@
         href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <!-- Leaflet JS -->
@@ -460,6 +506,103 @@
             $('#logout-button').click(function() {
                 $('#logout-form').submit();
             });
+
+            // Load notifications on page load
+            loadNotifications();
+            updateNotificationCount();
+
+            // Load notifications when dropdown is opened
+            $('#notificationDropdown').on('show.bs.dropdown', function() {
+                loadNotifications();
+            });
+
+            // Function to load recent notifications
+            function loadNotifications() {
+                $.get('{{ route("auth.notifications.recent") }}')
+                .done(function(response) {
+                    var notifications = response.notifications;
+                    var notificationsList = $('#notificationsList');
+                    notificationsList.empty();
+
+                    if (notifications.length > 0) {
+                        notifications.forEach(function(notification) {
+                            var icon = getNotificationIcon(notification.data.type);
+                            var bgClass = getNotificationBgClass(notification.data.type);
+                            var timeAgo = moment(notification.created_at).fromNow();
+
+                            var notificationHtml = `
+                                <a class="dropdown-item preview-item notification-item" data-id="${notification.id}">
+                                    <div class="preview-thumbnail">
+                                        <div class="preview-icon ${bgClass}">
+                                            <i class="${icon}"></i>
+                                        </div>
+                                    </div>
+                                    <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                        <h6 class="preview-subject font-weight-normal mb-1">${notification.data.title || 'Notification'}</h6>
+                                        <p class="text-gray ellipsis mb-0">${notification.data.message || 'No message available'}</p>
+                                        <small class="text-gray">${timeAgo}</small>
+                                    </div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                            `;
+                            notificationsList.append(notificationHtml);
+                        });
+                    } else {
+                        notificationsList.html('<div class="p-3 text-center text-muted">No new notifications</div>');
+                    }
+                })
+                .fail(function() {
+                    $('#notificationsList').html('<div class="p-3 text-center text-danger">Error loading notifications</div>');
+                });
+            }
+
+                        // Function to update notification count
+            function updateNotificationCount() {
+                $.get('{{ route("auth.notifications.unread-count") }}')
+                .done(function(response) {
+                    var count = response.count;
+                    var countElement = $('#notificationCount');
+
+                    if (count > 0) {
+                        countElement.text(count);
+                        countElement.show();
+                        // Add animation class for new notifications
+                        countElement.addClass('pulse-animation');
+                        setTimeout(function() {
+                            countElement.removeClass('pulse-animation');
+                        }, 1000);
+                    } else {
+                        countElement.hide();
+                    }
+                });
+            }
+
+            // Function to get notification icon
+            function getNotificationIcon(type) {
+                switch(type) {
+                    case 'property_inquiry':
+                        return 'mdi mdi-home';
+                    case 'contact_form':
+                        return 'mdi mdi-email';
+                    default:
+                        return 'mdi mdi-bell';
+                }
+            }
+
+            // Function to get notification background class
+            function getNotificationBgClass(type) {
+                switch(type) {
+                    case 'property_inquiry':
+                        return 'bg-info';
+                    case 'contact_form':
+                        return 'bg-warning';
+                    default:
+                        return 'bg-secondary';
+                }
+            }
+
+            // Auto-refresh notification count every 30 seconds
+            setInterval(updateNotificationCount, 30000);
         });
     </script>
 
@@ -483,6 +626,17 @@
                 text: '{{ session('error') }}',
                 timer: 2000,
                 showConfirmButton: false
+            });
+        </script>
+    @endif
+    @if (session('warning'))
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Warning',
+                text: '{{ session('warning') }}',
+                timer: 2000,
+                showConfirmButton: true
             });
         </script>
     @endif

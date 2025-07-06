@@ -2,23 +2,51 @@
 
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\BotManController;
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\SessionSyncController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Website\ContactController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Contracts\Role;
 
+
+
 // 🌐 Public Routes
-Route::get('/', fn() => view('welcome'))->name('home');
-Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
-Route::post('/inquiries', [InquiryController::class, 'store'])->name('inquiries.store');
-//Route::get('/properties/create', [PropertyController::class, 'create'])->name('properties.create');
+Route::get('/', [PropertyController::class, 'index'])->name('properties.index');
+Route::post('/search', [PropertyController::class, 'index'])->name('search');
+Route::post('/inquiry', [InquiryController::class, 'store'])->name('inquiry.store');
+//website.about
+route::get('/about', [PropertyController::class, 'about'])->name('website.about');
+//website.services
+route::get('/services', [PropertyController::class, 'services'])->name('website.services');
+//website.blog
+route::get('/blog', [PropertyController::class, 'blog'])->name('website.blog');
+Route::get('/property/{id?}', [PropertyController::class, 'property'])->name('website.property');
+
+Route::get('/faq', [PropertyController::class, 'faq'])->name('website.faq');
+Route::get('/contact', [PropertyController::class, 'contact'])->name('website.contact');
+Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
+Route::match(['get', 'post'], '/botman', [BotManController::class, 'handle']);
+
+Route::post('/api/session-sync', [SessionSyncController::class, 'store']);
+
 Route::middleware(['auth'])->name('auth.')->group(function () {
 
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
+
+    // Notifications
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{id}/mark-read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-read');
+    Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
+    Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
+    Route::get('/notifications/unread-count', [NotificationController::class, 'getUnreadCount'])->name('notifications.unread-count');
+    Route::get('/notifications/recent', [NotificationController::class, 'getRecent'])->name('notifications.recent');
 
     // 🧑‍💼 Admin Routes
     Route::middleware('can:view users')->group(function () {
@@ -40,6 +68,7 @@ Route::middleware(['auth'])->name('auth.')->group(function () {
         Route::get('/properties', [PropertyController::class, 'manage'])->name('properties.manage');
         route::get('/properties/create', [PropertyController::class, 'create'])->name('properties.create');
         Route::get('/properties/{id}', [PropertyController::class, 'show'])->name('properties.show')->middleware('can:view properties');
+
         Route::post('/properties', [PropertyController::class, 'store'])->name('properties.store')->middleware('can:create properties');
         Route::get('/properties/{id}/edit', [PropertyController::class, 'edit'])->name('properties.edit')->middleware('can:edit properties');
         Route::put('/properties/{id}', [PropertyController::class, 'update'])->name('properties.update')->middleware('can:edit properties');

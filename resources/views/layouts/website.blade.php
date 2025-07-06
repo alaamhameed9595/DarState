@@ -1,216 +1,361 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
-
-    <!-- Basic Page Needs
-  ================================================== -->
-    <meta charset="utf-8">
-    <title>Airspace | Your CMS </title>
-    @yield('head')
-
-    <!-- Mobile Specific Metas
-  ================================================== -->
+    <meta charset="UTF-8">
+    <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Creative Agency Bootstrap Template">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="author" content="Themefisher">
-    <meta name="theme-name" content="airspace">
-    <meta name="generator" content="Themefisher Airspace Template v1.0">
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
+    <!-- Title  -->
+    <title>South - Real Estate Agency Template | Home</title>
 
-    <!-- bootstrap.min css -->
-    <link rel="stylesheet" href="{{ asset('assets/website/plugins/bootstrap/bootstrap.min.css') }}">
-    <!-- Ionic Icon Css -->
-    <link rel="stylesheet" href="{{ asset('assets/website/plugins/Ionicons/css/ionicons.min.css') }}">
-    <!-- animate.css -->
-    <link rel="stylesheet" href="{{ asset('assets/website/plugins/animate-css/animate.css') }}">
-    <!-- Magnify Popup -->
-    <link rel="stylesheet" href="{{ asset('assets/website/plugins/magnific-popup/magnific-popup.css') }}">
-    <!-- Slick CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/website/plugins/slick/slick.css') }}">
+    <!-- Favicon  -->
+    <link rel="icon" href="{{ asset('assets/website/img/core-img/favicon.ico') }}">
 
-    <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="{{ asset('assets/website/css/style.css') }}">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/website/style.css') }}">
+    @yield('styles')
 
 </head>
 
-<body id="body">
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="south-load"></div>
+    </div>
 
-    <!-- Header Start -->
-    <header class="navigation">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <nav class="navbar navbar-expand-lg p-0">
-                        <a class="navbar-brand" href="{{ route('website.home') }}">
-                            <img src="{{ asset('assets/website/images/logo.png') }}" alt="Logo">
-                        </a>
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
 
-                        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
-                            data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                            <span class="ion-android-menu"></span>
-                        </button>
-
-                        <div class="collapse navbar-collapse ml-auto" id="navbarsExample09">
-                            <ul class="navbar-nav ml-auto">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="{{ route('website.home') }}">Home</a>
-                                </li>
-                                <li class="nav-item dropdown @@portfolio">
-                                    <a class="nav-link dropdown-toggle" href="#" id="dropdown03"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Portfolio
-                                        <span class="ion-ios-arrow-down"></span></a>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdown03">
-                                        <li><a class="dropdown-item @@portfolioFilter"
-                                                href="{{ route('website.portfolio') }}">Portfolio Filter</a></li>
-                                        <li><a class="dropdown-item @@portfolioSingle"
-                                                href="{{ route('website.portfolio_single') }}">Portfolio Single</a>
-                                        </li>
-
-                                        <li class="dropdown dropdown-submenu dropright">
-                                            <a class="dropdown-item dropdown-toggle" href="#!" id="dropdown0301"
-                                                role="button" data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">Sub Menu</a>
-
-                                            <ul class="dropdown-menu" aria-labelledby="dropdown0301">
-                                                <li><a class="dropdown-item" href="index.html">Submenu 01</a></li>
-                                                <li><a class="dropdown-item" href="index.html">Submenu 02</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item @@service"><a class="nav-link"
-                                        href="{{ route('website.service') }}">Service</a></li>
-                                <li class="nav-item dropdown @@blog">
-                                    <a class="nav-link dropdown-toggle" href="#" id="dropdown05"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog <span
-                                            class="ion-ios-arrow-down"></span></a>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdown05">
-                                        <li><a class="dropdown-item @@blogGrid"
-                                                href="blog-grid.html">Blog Grid</a></li>
-                                        <li><a class="dropdown-item @@blogSingle" href="/blog">Blog
-                                                Single</a></li>
-
-                                        <li class="dropdown dropdown-submenu dropleft">
-                                            <a class="dropdown-item dropdown-toggle" href="#!" id="dropdown0501"
-                                                role="button" data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">Sub Menu</a>
-
-                                            <ul class="dropdown-menu" aria-labelledby="dropdown0501">
-                                                <li><a class="dropdown-item" href="index.html">Submenu 01</a></li>
-                                                <li><a class="dropdown-item" href="index.html">Submenu 02</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item dropdown @@pages">
-                                    <a class="nav-link dropdown-toggle" href="#" id="dropdown05"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages <span
-                                            class="ion-ios-arrow-down"></span></a>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdown05">
-                                        <li><a class="dropdown-item @@about"
-                                                href="{{ route('website.about') }}">About Us</a></li>
-                                        <li><a class="dropdown-item @@comingSoon"
-                                                href="{{ route('website.coming_soon') }}">Coming Soon</a></li>
-                                        <li><a class="dropdown-item @@404"
-                                                href="{{ route('website.404') }}">404
-                                                Page</a></li>
-                                        <li><a class="dropdown-item @@faq"
-                                                href="{{ route('website.faq') }}">FAQ</a></li>
-                                        <li><a class="dropdown-item @@pricing"
-                                                href="{{ route('website.pricing') }}">Pricing Table</a></li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item @@contact"><a class="nav-link"
-                                        href="{{ route('website.contact') }}">Contact</a></li>
-                                {{--   <li>
-                                    <div class="position-fixed" style="top: 1rem; right: 1rem; z-index: 9999;">
-                                        <button id="darkModeToggle" class="btn btn-sm btn-secondary">
-                                            <span id="darkModeIcon" class="mdi mdi-weather-night"></span> Dark Mode
-                                        </button>
-                                    </div>
-                                </li> --}}
-                            </ul>
-                        </div>
-                    </nav>
+        <!-- Top Header Area -->
+        <div class="top-header-area">
+            <div class="h-100 d-md-flex justify-content-between align-items-center">
+                <div class="email-address">
+                    <a href="mailto:alaamhameed9595@gmail.com">contact@darstate.com</a>
                 </div>
+                <div class="phone-number d-flex">
+                    <div class="icon">
+                        <img src="{{ asset('assets/website/img/icons/phone-call.png') }}" alt="">
+                    </div>
+                    <div class="number">
+                        <a href="tel:+971 50 6074002">+971506074002</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Header Area -->
+        <div class="main-header-area" id="stickyHeader">
+            <div class="classy-nav-container breakpoint-off">
+                <!-- Classy Menu -->
+                <nav class="classy-navbar justify-content-between" id="southNav">
+
+                    <!-- Logo -->
+                    <a class="nav-brand" href="route('properties.index')"><img
+                            src="{{ asset('assets/website/img/core-img/logo.png') }}" alt=""></a>
+
+                    <!-- Navbar Toggler -->
+                    <div class="classy-navbar-toggler">
+                        <span class="navbarToggler"><span></span><span></span><span></span></span>
+                    </div>
+
+                    <!-- Menu -->
+                    <div class="classy-menu">
+
+                        <!-- close btn -->
+                        <div class="classycloseIcon">
+                            <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                        </div>
+
+                        <!-- Nav Start -->
+                        <div class="classynav">
+                            <ul>
+                                <li><a href="{{ route('properties.index') }}">Home</a></li>
+                                <li><a href="#">Pages</a>
+                                    <ul class="dropdown">
+                                        <li><a href="{{ route('properties.index') }}">Home</a></li>
+                                        <li><a href="{{ route('website.about') }}">About Us</a></li>
+                                        <li><a href="#">Listings</a>
+                                            <ul class="dropdown">
+                                                <li><a href="#">Listings</a></li>
+                                                <li><a href="#">Single Listings</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#">Blog</a>
+                                            <ul class="dropdown">
+                                                <li><a href="{{ route('website.blog') }}">Blog</a></li>
+                                                <li><a href="{{ route('website.blog') }}">Single Blog</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="{{ route('website.contact') }}">Contact</a></li>
+
+                                    </ul>
+                                </li>
+                                <li><a href="{{ route('website.about') }}">About Us</a></li>
+                                <li><a href="{{ route('properties.index') }}">Properties</a></li>
+                                <li><a href="{{ route('website.blog') }}">Blog</a></li>
+                                <li><a href="#">Mega Menu</a>
+                                    <div class="megamenu">
+                                        <ul class="single-mega cn-col-4">
+                                            <li class="title">Headline 1</li>
+                                            <li><a href="#">Mega Menu Item 1</a></li>
+                                            <li><a href="#">Mega Menu Item 2</a></li>
+                                            <li><a href="#">Mega Menu Item 3</a></li>
+                                            <li><a href="#">Mega Menu Item 4</a></li>
+                                            <li><a href="#">Mega Menu Item 5</a></li>
+                                        </ul>
+                                        <ul class="single-mega cn-col-4">
+                                            <li class="title">Headline 2</li>
+                                            <li><a href="#">Mega Menu Item 1</a></li>
+                                            <li><a href="#">Mega Menu Item 2</a></li>
+                                            <li><a href="#">Mega Menu Item 3</a></li>
+                                            <li><a href="#">Mega Menu Item 4</a></li>
+                                            <li><a href="#">Mega Menu Item 5</a></li>
+                                        </ul>
+                                        <ul class="single-mega cn-col-4">
+                                            <li class="title">Headline 3</li>
+                                            <li><a href="#">Mega Menu Item 1</a></li>
+                                            <li><a href="#">Mega Menu Item 2</a></li>
+                                            <li><a href="#">Mega Menu Item 3</a></li>
+                                            <li><a href="#">Mega Menu Item 4</a></li>
+                                            <li><a href="#">Mega Menu Item 5</a></li>
+                                        </ul>
+                                        <ul class="single-mega cn-col-4">
+                                            <li class="title">Headline 4</li>
+                                            <li><a href="#">Mega Menu Item 1</a></li>
+                                            <li><a href="#">Mega Menu Item 2</a></li>
+                                            <li><a href="#">Mega Menu Item 3</a></li>
+                                            <li><a href="#">Mega Menu Item 4</a></li>
+                                            <li><a href="#">Mega Menu Item 5</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><a href="{{ route('website.contact') }}">Contact</a></li>
+                            </ul>
+
+                            <!-- Search Form -->
+                            <div class="south-search-form">
+                                <form action="{{ route('search') }}" method="post">
+                                    @csrf
+                                    <input type="search" name="q" id="search"
+                                        placeholder="Search Anything ...">
+                                    <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                </form>
+                            </div>
+
+                            <!-- Search Button -->
+                            <a href="#" class="searchbtn"><i class="fa" aria-hidden="true"></i></a>
+                        </div>
+                        <!-- Nav End -->
+                    </div>
+                </nav>
             </div>
         </div>
     </header><!-- header close -->
     <!-- Header End -->
     @yield('content')
     <!-- footer Start -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="footer-manu">
-                        <ul>
-                            <li><a href="{{ route('website.about') }}">About Us</a></li>
-                            <li><a href="{{ route('website.contact') }}">Contact us</a></li>
-                            <li><a href="{{ route('website.service') }}">How it works</a></li>
-                            <li><a href="{{ route('website.faq') }}">FAQ</a></li>
-                            <li><a href="{{ route('website.pricing') }}">Pricing</a></li>
-                        </ul>
+    <footer class="footer-area section-padding-100-0 bg-img gradient-background-overlay"
+        style="background-image: url('{{ asset('assets/website/img/bg-img/cta.jpg') }}');">
+        <!-- Main Footer Area -->
+        <div class="main-footer-area">
+            <div class="container">
+                <div class="row">
+
+                    <!-- Single Footer Widget -->
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="footer-widget-area mb-100">
+                            <!-- Widget Title -->
+                            <div class="widget-title">
+                                <h6>About Us</h6>
+                            </div>
+
+                            <img src="{{ asset('assets/website/img/bg-img/footer.jpg') }}" alt="">
+                            <div class="footer-logo my-4">
+                                <img src="{{ asset('assets/website/img/core-img/logo.png') }}" alt="">
+                            </div>
+                            <p>Integer nec bibendum lacus. Suspen disse dictum enim sit amet libero males uada feugiat.
+                                Praesent malesuada.</p>
+                        </div>
                     </div>
-                    <p class="copyright mb-0">Copyright
-                        <script>
-                            document.write(new Date().getFullYear())
-                        </script> &copy; Designed & Developed by Alaa Almhameed
-                    </p>
+
+                    <!-- Single Footer Widget -->
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="footer-widget-area mb-100">
+                            <!-- Widget Title -->
+                            <div class="widget-title">
+                                <h6>Hours</h6>
+                            </div>
+                            <!-- Office Hours -->
+                            <div class="weekly-office-hours">
+                                <ul>
+                                    <li class="d-flex align-items-center justify-content-between"><span>Monday -
+                                            Friday</span> <span>09 AM - 19 PM</span></li>
+                                    <li class="d-flex align-items-center justify-content-between"><span>Saturday</span>
+                                        <span>09 AM - 14 PM</span>
+                                    </li>
+                                    <li class="d-flex align-items-center justify-content-between"><span>Sunday</span>
+                                        <span>Closed</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- Address -->
+                            <div class="address">
+                                <h6><img src="{{ asset('assets/website/img/icons/phone-call.png') }}" alt="">
+                                    +971 506074002</h6>
+                                <h6><img src="{{ asset('assets/website/img/icons/envelope.png') }}" alt="">
+                                    contact@darstate.com</h6>
+                                <h6><img src="{{ asset('assets/website/img/icons/location.png') }}" alt="">
+                                    Mayah Str. no 8, b5, 56832,
+                                    AlAin , UAE</h6>
+                            </div>
+                            <!-- Social links -->
+                            <div class="social-links d-flex align-items-center gap-3" style="gap: 24px;">
+                                <a href="https://www.facebook.com/profile.php?id=61577934653375" target="_blank"
+                                    class="d-flex align-items-center">
+                                    <img src="{{ asset('assets/website/img/icons/facebook.png') }}" alt="Facebook"
+                                        style="width:28px;height:28px;margin-right:8px;">
+                                </a>
+                                <a href="https://t.me/DarStateCity" target="_blank"
+                                    class="d-flex align-items-center">
+                                    <img src="{{ asset('assets/website/img/icons/telegram.png') }}" alt="Telegram"
+                                        style="width:28px;height:28px;margin-right:8px;">
+                                </a>
+                                <a href="{{ route('properties.index') }}" target="_blank"
+                                    class="d-flex align-items-center">
+                                    <img src="{{ asset('assets/website/img/icons/website.png') }}" alt="Website"
+                                        style="width:28px;height:28px;margin-right:8px;">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Single Footer Widget -->
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="footer-widget-area mb-100">
+                            <!-- Widget Title -->
+                            <div class="widget-title">
+                                <h6>Useful Links</h6>
+                            </div>
+                            <!-- Nav -->
+                            <ul class="useful-links-nav d-flex align-items-center">
+                                <li><a href="{{ route('properties.index') }}">Home</a></li>
+                                <li><a href="{{ route('website.about') }}">About us</a></li>
+                                <li><a href="{{ route('website.services') }}">Services</a></li>
+                                <li><a href="{{ route('properties.index') }}">Properties</a></li>
+                                <li><a href="{{ route('website.blog') }}">Blog</a></li>
+                                <li><a href="{{ route('website.contact') }}">Contact</a></li>
+                                <li><a href="{{ route('website.faq') }}">FAQ</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Single Footer Widget -->
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="footer-widget-area mb-100">
+                            <!-- Widget Title -->
+                            <div class="widget-title">
+                                <h6>Featured Properties</h6>
+                            </div>
+                            <!-- Featured Properties Slides -->
+                            <div class="featured-properties-slides owl-carousel">
+                                <!-- Single Slide -->
+                                <div class="single-featured-properties-slide">
+                                    <a href="#"><img
+                                            src="{{ asset('assets/website/img/bg-img/fea-product.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <!-- Single Slide -->
+                                <div class="single-featured-properties-slide">
+                                    <a href="#"><img
+                                            src="{{ asset('assets/website/img/bg-img/fea-product.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <!-- Single Slide -->
+                                <div class="single-featured-properties-slide">
+                                    <a href="#"><img
+                                            src="{{ asset('assets/website/img/bg-img/fea-product.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
+
+
     </footer>
+    <!-- ##### Footer Area End ##### -->
 
-
-    <!--Scroll to top-->
-    <div id="scroll-to-top" class="scroll-to-top">
-        <span class="icon ion-ios-arrow-up"></span>
-    </div>
-
-    <!--
-    Essential Scripts
-    =====================================-->
-
-
-    <!-- Main jQuery -->
-    <script src="{{ asset('assets/website/plugins/jquery/jquery.min.js') }}"></script>
-    <!-- Bootstrap 3.1 -->
-    <script src="{{ asset('assets/website/plugins/bootstrap/bootstrap.min.js') }}"></script>
-    <!-- slick Carousel -->
-    <script src="{{ asset('assets/website/plugins/slick/slick.min.js') }}"></script>
-    <script src="{{ asset('assets/website/plugins/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
-    <!-- filter -->
-    <script src="{{ asset('assets/website/plugins/shuffle/shuffle.min.js') }}"></script>
-    <script src="{{ asset('assets/website/plugins/SyoTimer/jquery.syotimer.min.js') }}"></script>
-    <!-- Google Map -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU&libraries=places">
-    </script>
-    <script src="{{ asset('assets/website/plugins/google-map/map.js') }}"></script>
-
-    <script src="{{ asset('assets/website/js/script.js') }}"></script>
+    <!-- jQuery (Necessary for All JavaScript Plugins) -->
+    <script src="{{ asset('assets/website/js/jquery/jquery-2.2.4.min.js') }}"></script>
+    <!-- Popper js -->
+    <script src="{{ asset('assets/website/js/popper.min.js') }}"></script>
+    <!-- Bootstrap js -->
+    <script src="{{ asset('assets/website/js/bootstrap.min.js') }}"></script>
+    <!-- Plugins js -->
+    <script src="{{ asset('assets/website/js/plugins.js') }}"></script>
+    <script src="{{ asset('assets/website/js/classy-nav.min.js') }}"></script>
+    <script src="{{ asset('assets/website/js/jquery-ui.min.js') }}"></script>
+    <!-- Active js -->
+    <script src="{{ asset('assets/website/js/active.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js"></script>
     <script>
-        // On page load, check localStorage
-        if (localStorage.getItem('dark-mode') === 'enabled') {
-            document.body.classList.add('dark-mode');
+        function syncSessionStorageToLaravel(key) {
+            const value = sessionStorage.getItem(key);
+            if (value) {
+                fetch('/api/session-sync', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        key,
+                        value
+                    })
+                });
+            }
         }
 
-        document.getElementById('darkModeToggle').addEventListener('click', function() {
-            document.body.classList.toggle('dark-mode');
-            // Save preference
-            if (document.body.classList.contains('dark-mode')) {
-                localStorage.setItem('dark-mode', 'enabled');
+        // Force ask for location if not present in sessionStorage
+        if (!sessionStorage.getItem('user_location')) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const coords = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    };
+                    sessionStorage.setItem('user_location', JSON.stringify(coords));
+                    syncSessionStorageToLaravel('user_location');
+                }, function(error) {
+                    alert('Location access is required for the best experience.');
+                });
             } else {
-                localStorage.setItem('dark-mode', 'disabled');
+                alert('Geolocation is not supported by your browser.');
             }
-        });
+        } else {
+            syncSessionStorageToLaravel('user_location');
+        }
+
+        var botmanWidget = {
+            introMessage: "\uD83D\uDC4B Hi there! I'm your Property Search Helper. Ask me about listings by location, price, or type!",
+            bubbleBackground: '#73c3ec',
+            mainColor: '#947054',
+            sendButtonText: 'Send',
+            desktopHeight: 450,
+            desktopWidth: 370,
+            title: 'DarState Assistant',
+            mobileHeight: 400,
+            mobileWidth: 300,
+        };
     </script>
+    @yield('scripts')
+
 </body>
 
 </html>
