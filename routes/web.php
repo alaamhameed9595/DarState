@@ -38,7 +38,7 @@ Route::post('/api/session-sync', [SessionSyncController::class, 'store']);
 
 Route::middleware(['auth'])->name('auth.')->group(function () {
 
-    Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
     // Notifications
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');

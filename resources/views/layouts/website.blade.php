@@ -304,6 +304,285 @@
     <!-- Active js -->
     <script src="{{ asset('assets/website/js/active.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js"></script>
+
+    <!-- Custom BotMan Professional Styling -->
+    <style>
+        /* Professional BotMan Widget Styling */
+        .botman-widget {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+        }
+
+        .botman-widget .widget-container {
+            border-radius: 16px !important;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15) !important;
+            border: 1px solid rgba(255,255,255,0.2) !important;
+        }
+
+        .botman-widget .widget-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+            border-radius: 16px 16px 0 0 !important;
+            padding: 16px 20px !important;
+        }
+
+        .botman-widget .widget-header h3 {
+            font-weight: 600 !important;
+            letter-spacing: 0.5px !important;
+        }
+
+        .botman-widget .widget-messages-container {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+            border-radius: 0 0 16px 16px !important;
+        }
+
+        .botman-widget .message {
+            border-radius: 18px !important;
+            margin: 8px 12px !important;
+            padding: 12px 18px !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+            font-size: 14px !important;
+            line-height: 1.5 !important;
+        }
+
+        .botman-widget .message.bot {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
+            border: 1px solid #e9ecef !important;
+            color: #2c3e50 !important;
+            margin-right: 20px !important;
+        }
+
+        .botman-widget .message.user {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%) !important;
+            color: #ffffff !important;
+            margin-left: 20px !important;
+            text-align: right !important;
+        }
+
+        .botman-widget .widget-input-container {
+            background: #ffffff !important;
+            border-top: 1px solid #e9ecef !important;
+            padding: 16px !important;
+            border-radius: 0 0 16px 16px !important;
+        }
+
+        .botman-widget .widget-input {
+            border: 2px solid #e9ecef !important;
+            border-radius: 25px !important;
+            padding: 12px 20px !important;
+            font-size: 14px !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .botman-widget .widget-input:focus {
+            border-color: #3498db !important;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1) !important;
+            outline: none !important;
+        }
+
+        .botman-widget .widget-send-button {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%) !important;
+            border: none !important;
+            border-radius: 50% !important;
+            width: 40px !important;
+            height: 40px !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .botman-widget .widget-send-button:hover {
+            transform: scale(1.1) !important;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3) !important;
+        }
+
+        .botman-widget .widget-bubble {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+            border-radius: 50px !important;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2) !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .botman-widget .widget-bubble:hover {
+            transform: scale(1.05) !important;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25) !important;
+        }
+
+        /* Typing indicator */
+        .botman-widget .typing-indicator {
+            background: #3498db !important;
+        }
+
+        /* Scrollbar styling */
+        .botman-widget .widget-messages-container::-webkit-scrollbar {
+            width: 6px !important;
+        }
+
+        .botman-widget .widget-messages-container::-webkit-scrollbar-track {
+            background: #f1f1f1 !important;
+            border-radius: 3px !important;
+        }
+
+        .botman-widget .widget-messages-container::-webkit-scrollbar-thumb {
+            background: #bdc3c7 !important;
+            border-radius: 3px !important;
+        }
+
+        .botman-widget .widget-messages-container::-webkit-scrollbar-thumb:hover {
+            background: #95a5a6 !important;
+        }
+
+        /* Facebook Messenger-style buttons */
+        .botman-widget .widget-actions {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            gap: 8px !important;
+            margin-top: 12px !important;
+        }
+
+        .botman-widget .widget-action {
+            background: #0084ff !important;
+            color: #ffffff !important;
+            border: none !important;
+            border-radius: 18px !important;
+            padding: 8px 16px !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            box-shadow: 0 2px 4px rgba(0, 132, 255, 0.3) !important;
+            margin: 2px !important;
+            max-width: 200px !important;
+            text-align: center !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+        }
+
+        .botman-widget .widget-action:hover {
+            background: #0073e6 !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 8px rgba(0, 132, 255, 0.4) !important;
+        }
+
+        .botman-widget .widget-action:active {
+            transform: translateY(0) !important;
+            box-shadow: 0 2px 4px rgba(0, 132, 255, 0.3) !important;
+        }
+
+        /* Messenger-style message bubbles */
+        .botman-widget .message.bot {
+            background: #f0f0f0 !important;
+            color: #000000 !important;
+            border-radius: 18px 18px 18px 4px !important;
+            margin-right: 40px !important;
+            margin-left: 8px !important;
+            border: none !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+        }
+
+        .botman-widget .message.user {
+            background: #0084ff !important;
+            color: #ffffff !important;
+            border-radius: 18px 18px 4px 18px !important;
+            margin-left: 40px !important;
+            margin-right: 8px !important;
+            text-align: right !important;
+            border: none !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+        }
+
+        /* Professional animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes buttonPop {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .botman-widget .widget-action {
+            animation: buttonPop 0.3s ease-out !important;
+        }
+
+        /* Property slider styling */
+        .botman-widget .message.bot {
+            max-height: 400px !important;
+            overflow-y: auto !important;
+        }
+
+        .botman-widget .widget-actions {
+            justify-content: center !important;
+        }
+
+        /* Property button styling */
+        .botman-widget .widget-action[data-value^="property_"] {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            border: 2px solid #ffffff !important;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4) !important;
+            font-weight: 600 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+        }
+
+        .botman-widget .widget-action[data-value^="property_"]:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6) !important;
+        }
+
+        /* View all properties button */
+        .botman-widget .widget-action[data-value="view_all"] {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important;
+            box-shadow: 0 4px 15px rgba(17, 153, 142, 0.4) !important;
+        }
+
+        .botman-widget .widget-action[data-value="view_all"]:hover {
+            background: linear-gradient(135deg, #38ef7d 0%, #11998e 100%) !important;
+            box-shadow: 0 6px 20px rgba(17, 153, 142, 0.6) !important;
+        }
+
+        /* Contact agent button */
+        .botman-widget .widget-action[data-value="contact"] {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%) !important;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4) !important;
+        }
+
+        .botman-widget .widget-action[data-value="contact"]:hover {
+            background: linear-gradient(135deg, #ee5a24 0%, #ff6b6b 100%) !important;
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6) !important;
+        }
+
+        .botman-widget .message {
+            animation: fadeInUp 0.3s ease-out !important;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .botman-widget .widget-container {
+                border-radius: 12px !important;
+            }
+
+            .botman-widget .message {
+                margin: 6px 8px !important;
+                padding: 10px 14px !important;
+                font-size: 13px !important;
+            }
+        }
+    </style>
     <script>
         function syncSessionStorageToLaravel(key) {
             const value = sessionStorage.getItem(key);
@@ -343,15 +622,48 @@
         }
 
         var botmanWidget = {
-            introMessage: "\uD83D\uDC4B Hi there! I'm your Property Search Helper. Ask me about listings by location, price, or type!",
-            bubbleBackground: '#73c3ec',
-            mainColor: '#947054',
+            introMessage: "🏢 Welcome to DarState! I'm your professional real estate assistant. How can I help you today?",
+            bubbleBackground: '#2c3e50',
+            mainColor: '#34495e',
             sendButtonText: 'Send',
-            desktopHeight: 450,
-            desktopWidth: 370,
-            title: 'DarState Assistant',
-            mobileHeight: 400,
-            mobileWidth: 300,
+            desktopHeight: 500,
+            desktopWidth: 400,
+            title: 'DarState Professional Assistant',
+            mobileHeight: 450,
+            mobileWidth: 320,
+            background: '#f8f9fa',
+            headerTextColor: '#ffffff',
+            headerBackgroundColor: '#2c3e50',
+            botMessageBackground: '#ffffff',
+            botMessageTextColor: '#2c3e50',
+            userMessageBackground: '#3498db',
+            userMessageTextColor: '#ffffff',
+            placeholderText: 'Type your message here...',
+            aboutText: 'DarState Professional Real Estate Assistant',
+            aboutLink: 'https://darstate.com',
+            chatBackground: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            bubbleBackground: '#2c3e50',
+            bubbleTextColor: '#ffffff',
+            bubbleBorderRadius: '50px',
+            bubbleShadow: '0 4px 12px rgba(0,0,0,0.15)',
+            chatWindowBackground: 'rgba(255, 255, 255, 0.95)',
+            chatWindowBorderRadius: '12px',
+            chatWindowShadow: '0 8px 32px rgba(0,0,0,0.1)',
+            inputBackground: '#ffffff',
+            inputBorderColor: '#e9ecef',
+            inputTextColor: '#2c3e50',
+            sendButtonBackground: '#3498db',
+            sendButtonTextColor: '#ffffff',
+            sendButtonBorderRadius: '8px',
+            sendButtonHoverBackground: '#2980b9',
+            messageBorderRadius: '12px',
+            messageMargin: '8px',
+            messagePadding: '12px 16px',
+            botMessageBorder: '1px solid #e9ecef',
+            userMessageBorder: 'none',
+            typingIndicatorColor: '#3498db',
+            scrollbarColor: '#bdc3c7',
+            scrollbarTrackColor: '#ecf0f1'
         };
     </script>
     @yield('scripts')
