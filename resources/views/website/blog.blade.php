@@ -1,5 +1,11 @@
 @extends('layouts.website')
-@section('title', 'Blog')
+@section('title', 'Blog | DarState Real Estate Insights')
+@section('meta_description', 'Read the latest real estate news, tips, and market insights on the DarState blog. Stay informed about property trends, buying guides, and investment opportunities in the UAE.')
+@section('meta_keywords', 'real estate blog, property news, real estate tips, syria  property market, DarState blog')
+@section('og_title', 'Blog | DarState Real Estate Insights')
+@section('og_description', 'Explore DarState’s blog for expert advice, property trends, and the latest news in the UAE real estate market.')
+@section('og_image', asset('assets/website/img/bg-img/blog1.jpg'))
+
 @section('styles')
 @endsection
 @section('content')

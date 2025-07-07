@@ -1,5 +1,12 @@
 @extends('layouts.website')
-@section('title', 'Blog')
+
+@section('title', 'Contact Us | DarState Real Estate')
+@section('meta_description', 'Get in touch with DarState for property inquiries, support, or partnership opportunities. Find our contact details, office hours, and location in AlAin, UAE.')
+@section('meta_keywords', 'contact, real estate, DarState, Daraa, Syria, property inquiry, support')
+@section('og_title', 'Contact Us | DarState Real Estate')
+@section('og_description', 'Contact DarState for all your real estate needs in the UAE. Call, email, or visit our office in AlAin.')
+@section('og_image', asset('assets/website/img/bg-img/about.jpg'))
+
 @section('styles')
     <style>
         #map {

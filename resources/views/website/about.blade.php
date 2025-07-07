@@ -1,5 +1,10 @@
 @extends('layouts.website')
-@section('title', 'About Us')
+@section('title', 'About Us | DarState')
+@section('meta_description', 'Learn more about DarState, your trusted real estate partner.')
+@section('meta_keywords', 'about, real estate, DarState')
+@section('og_title', 'About Us | DarState')
+@section('og_description', 'Learn more about DarState, your trusted real estate partner.')
+@section('og_image', asset('assets/website/img/bg-img/about.jpg'))
 @section('styles')
 @endsection
 @section('content')

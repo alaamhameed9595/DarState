@@ -14,7 +14,8 @@ use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Website\ContactController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Contracts\Role;
-
+use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\Tags\Url;
 
 
 // 🌐 Public Routes
@@ -35,6 +36,22 @@ Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.
 Route::match(['get', 'post'], '/botman', [BotManController::class, 'handle']);
 
 Route::post('/api/session-sync', [SessionSyncController::class, 'store']);
+
+Route::get('/sitemap.xml', function () {
+    $sitemap = Sitemap::create()
+        ->add(Url::create('/'))
+        ->add(Url::create('/about'))
+        ->add(Url::create('/contact'))
+        ->add(Url::create('/blog'))
+        ->add(Url::create('/faq'));
+
+    // Add all properties dynamically
+    foreach (\App\Models\Property::all() as $property) {
+        $sitemap->add(Url::create(route('website.property', $property->id)));
+    }
+
+    return $sitemap->toResponse(request());
+});
 
 Route::middleware(['auth'])->name('auth.')->group(function () {
 

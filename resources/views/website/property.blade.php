@@ -1,5 +1,27 @@
 @extends('layouts.website')
-
+@section('title', $property->title . ' | DarState Property')
+@section('meta_description', Str::limit($property->description, 160, ''))
+@section('meta_keywords', $property->type . ', ' . $property->city . ', ' . $property->state . ', ' . $property->country . ', real estate, property, DarState')
+@section('og_title', $property->title . ' | DarState Property')
+@section('og_description', Str::limit($property->description, 160, ''))
+@section('og_image', $property->images->isNotEmpty() ? $property->images[0]->image_url : asset('assets/website/img/bg-img/no-image.png'))
+@section('structured_data')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Residence",
+  "name": "{{ $property->title }}",
+  "description": "{{ Str::limit($property->description, 150) }}",
+  "image": "{{ $property->images->isNotEmpty() ? $property->images[0]->image_url : asset('assets/website/img/bg-img/no-image.png') }}",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "{{ $property->address }}",
+    "addressLocality": "{{ $property->city }}",
+    "addressCountry": "{{ $property->country }}"
+  }
+}
+</script>
+@endsection
 @push('styles')
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
@@ -139,6 +161,7 @@
         }
     </style>
 @endpush
+
 @section('content')
     <!-- ##### Listings Content Area Start ##### -->
     <section class="listings-content-wrapper section-padding-100">

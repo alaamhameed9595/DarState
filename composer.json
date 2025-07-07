@@ -17,7 +17,8 @@
         "laravel/scout": "^10.15",
         "laravel/tinker": "^2.8",
         "meilisearch/meilisearch-php": "^1.15",
-        "spatie/laravel-permission": "^6.20"
+        "spatie/laravel-permission": "^6.20",
+        "spatie/laravel-sitemap": "^7.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

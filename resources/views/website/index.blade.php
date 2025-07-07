@@ -1,5 +1,10 @@
 @extends('layouts.website')
-@section('title', 'Home')
+@section('title', 'DarState | Find Your Dream Home in the Syria')
+@section('meta_description', 'Discover your perfect property with DarState. Browse homes for sale and rent, explore featured listings, and connect with trusted real estate experts in the UAE.')
+@section('meta_keywords', 'real estate, UAE properties, homes for sale, homes for rent, buy property, rent property, DarState')
+@section('og_title', 'DarState | Find Your Dream Home in the daraa')
+@section('og_description', 'Browse the best properties for sale and rent in the UAE. Find your dream home with DarState real estate.')
+@section('og_image', asset('assets/website/img/bg-img/hero1.jpg'))
 @section('content')
     <!-- ##### Hero Area Start ##### -->
     <section class="hero-area">

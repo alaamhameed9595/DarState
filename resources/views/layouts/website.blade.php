@@ -3,11 +3,17 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="">
+    <meta name="description" content="darState is real state service in daraa in syria for rent and sale">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords" content="@yield('meta_keywords', 'real estate, properties, buy, sell, rent,daraa,syria,looking for,apartment,land,flat,villa,townhouse')">
+    <meta property="og:title" content="@yield('og_title', 'Default OG Title')" />
+    <meta property="og:description" content="@yield('og_description', 'Default OG Description')" />
+    <meta property="og:image" content="@yield('og_image', asset('default-og-image.jpg'))" />
+    <meta property="og:url" content="{{ url()->current() }}" />
+    <meta name="twitter:card" content="summary_large_image" />
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
+    @yield('structured_data')
     <!-- Title  -->
     <title>South - Real Estate Agency Template | Home</title>
 
@@ -314,8 +320,8 @@
 
         .botman-widget .widget-container {
             border-radius: 16px !important;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15) !important;
-            border: 1px solid rgba(255,255,255,0.2) !important;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
         }
 
         .botman-widget .widget-header {
@@ -338,7 +344,7 @@
             border-radius: 18px !important;
             margin: 8px 12px !important;
             padding: 12px 18px !important;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
             font-size: 14px !important;
             line-height: 1.5 !important;
         }
@@ -395,13 +401,13 @@
         .botman-widget .widget-bubble {
             background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
             border-radius: 50px !important;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2) !important;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2) !important;
             transition: all 0.3s ease !important;
         }
 
         .botman-widget .widget-bubble:hover {
             transform: scale(1.05) !important;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.25) !important;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25) !important;
         }
 
         /* Typing indicator */
@@ -474,7 +480,7 @@
             margin-right: 40px !important;
             margin-left: 8px !important;
             border: none !important;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
         }
 
         .botman-widget .message.user {
@@ -485,7 +491,7 @@
             margin-right: 8px !important;
             text-align: right !important;
             border: none !important;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
         }
 
         /* Professional animations */
@@ -494,6 +500,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -505,9 +512,11 @@
                 transform: scale(0.8);
                 opacity: 0;
             }
+
             50% {
                 transform: scale(1.05);
             }
+
             100% {
                 transform: scale(1);
                 opacity: 1;
