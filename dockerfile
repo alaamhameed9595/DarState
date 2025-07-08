@@ -22,7 +22,9 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader
 
 # Install and build frontend assets
-RUN npm install && npm run build
+RUN npm install
+
+RUN npm run build
 
 # Set correct permissions
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache && \
