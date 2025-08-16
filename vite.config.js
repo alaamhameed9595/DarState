@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import path from 'path';
+
 
 import * as path from 'node:path'; // ✅ use `node:path` for native modules in ESM
 import { fileURLToPath } from 'node:url'; // ✅ required in ESM mode
