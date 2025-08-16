@@ -23,6 +23,7 @@
     <!-- Style CSS -->
     <link rel="stylesheet" href="{{ asset('assets/website/style.css') }}">
     @yield('styles')
+    @include('ga')
 
 </head>
 
